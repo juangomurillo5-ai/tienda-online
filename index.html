@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tienda Tech</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>🛒 Tienda Tecnológica</h1>
+
+<!-- LOGIN / REGISTRO -->
+<div id="auth">
+  <h2>Registro</h2>
+  <input type="text" id="regUser" placeholder="Usuario">
+  <input type="password" id="regPass" placeholder="Contraseña">
+  <button onclick="registrar()">Registrarse</button>
+
+  <h2>Login</h2>
+  <input type="text" id="logUser" placeholder="Usuario">
+  <input type="password" id="logPass" placeholder="Contraseña">
+  <button onclick="login()">Iniciar sesión</button>
+</div>
+
+<!-- TIENDA -->
+<div id="tienda" style="display:none;">
+  <h2>Catálogo</h2>
+
+  <select onchange="filtrar(this.value)">
+    <option value="todos">Todos</option>
+    <option value="celulares">Celulares</option>
+    <option value="laptops">Laptops</option>
+  </select>
+
+  <div id="productos"></div>
+
+  <h2>🛒 Carrito</h2>
+  <ul id="carrito"></ul>
+  <h3>Total: $<span id="total">0</span></h3>
+
+  <button onclick="pagar()">Pagar</button>
+
+  <h2>📦 Historial</h2>
+  <ul id="historial"></ul>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
