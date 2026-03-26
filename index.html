@@ -1,49 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Tienda Tech</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECH STORE PRO - Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<h1>🛒 Tienda Tecnológica</h1>
+    <header class="navbar">
+        <h1 onclick="location.reload()" style="cursor:pointer">⚡ TECH STORE PRO</h1>
+        
+        <div class="user-area">
+            <span id="userInfo" onclick="abrirPerfil()" style="cursor:pointer; font-weight: bold;"></span>
+            
+            <div class="carrito-container" onclick="toggleCarrito()">
+                <span id="contadorCarrito">🛒 0</span>
+                <small>Mi Compra</small>
+            </div>
 
-<!-- LOGIN / REGISTRO -->
-<div id="auth">
-  <h2>Registro</h2>
-  <input type="text" id="regUser" placeholder="Usuario">
-  <input type="password" id="regPass" placeholder="Contraseña">
-  <button onclick="registrar()">Registrarse</button>
+            <button class="btn-icon" onclick="abrirAuth()" title="Iniciar Sesión">👤</button>
+            <button class="btn-icon" id="btnAdmin" onclick="mostrarSeccion('admin')" style="display:none;" title="Panel Admin">⚙️</button>
+            <button class="btn-icon" onclick="cerrarSesion()" title="Cerrar Sesión">🚪</button>
+        </div>
+    </header>
 
-  <h2>Login</h2>
-  <input type="text" id="logUser" placeholder="Usuario">
-  <input type="password" id="logPass" placeholder="Contraseña">
-  <button onclick="login()">Iniciar sesión</button>
-</div>
+    <main id="contenedor-principal">
+        
+        <section id="seccion-tienda">
+            <div class="herramientas-tienda">
+                <input type="text" id="inputBusqueda" placeholder="Buscar por marca, modelo o descripción..." oninput="buscarProductos(this.value)">
+                
+                <div class="filtros">
+                    <button onclick="filtrarCategoria('todos')">Todos los productos</button>
+                    <button onclick="filtrarCategoria('celulares')">Celulares</button>
+                    <button onclick="filtrarCategoria('laptops')">Laptops</button>
+                    <button onclick="filtrarCategoria('accesorios')">Accesorios</button>
+                </div>
+            </div>
 
-<!-- TIENDA -->
-<div id="tienda" style="display:none;">
-  <h2>Catálogo</h2>
+            <div id="contenedor-productos" class="grid-productos"></div>
+        </section>
 
-  <select onchange="filtrar(this.value)">
-    <option value="todos">Todos</option>
-    <option value="celulares">Celulares</option>
-    <option value="laptops">Laptops</option>
-  </select>
+        <section id="seccion-admin" style="display: none; padding: 20px 5%;">
+            <div class="admin-header" style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>⚙️ Panel de Gestión de Inventario</h2>
+                <button class="btn-volver" onclick="mostrarSeccion('tienda')">⬅ Volver a la Tienda</button>
+            </div>
+            
+            <table class="tabla-admin">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Stock Actual</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-tabla-admin">
+                    </tbody>
+            </table>
+        </section>
+    </main>
 
-  <div id="productos"></div>
+    <aside id="perfilLateral" class="sidebar-perfil">
+        <div class="sidebar-header">
+            <h2>Mi Cuenta</h2>
+            <button class="btn-cerrar-simple" onclick="cerrarPerfil()">×</button>
+        </div>
+        <div class="menu-perfil">
+            <button onclick="verHistorial()">📜 Historial de Compras</button>
+            <button onclick="verFavoritos()">❤️ Mis Favoritos</button>
+        </div>
+        <div id="detalle-perfil-dinamico" class="detalle-info">
+            </div>
+    </aside>
 
-  <h2>🛒 Carrito</h2>
-  <ul id="carrito"></ul>
-  <h3>Total: $<span id="total">0</span></h3>
+    <aside id="carritoLateral" class="sidebar-carrito">
+        <div class="sidebar-header">
+            <h2>🛒 Mi Carrito</h2>
+            <button class="btn-cerrar-simple" onclick="toggleCarrito()">×</button>
+        </div>
+        <ul id="lista-carrito" class="lista-items-carrito"></ul>
+        <div class="carrito-footer">
+            <h3>Total: $<span id="precio-total">0</span></h3>
+            
+            <select id="selectorPago" onchange="mostrarCamposPago()" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px;">
+                <option value="tarjeta">💳 Tarjeta de Crédito/Débito</option>
+                <option value="pse">🏦 PSE (Cuenta de Ahorros)</option>
+                <option value="nequi">📱 Nequi / Daviplata</option>
+            </select>
+            
+            <button class="btn-finalizar" onclick="iniciarPago()">Proceder al Pago</button>
+        </div>
+    </aside>
 
-  <button onclick="pagar()">Pagar</button>
+    <div id="modalAuth" class="modal">
+        <div class="modal-content auth-box">
+            <span class="btn-cerrar-modal" onclick="cerrarAuth()">&times;</span>
+            
+            <div class="auth-tabs">
+                <button id="tabLogin" class="tab-active" onclick="cambiarAuthTab('login')">Entrar</button>
+                <button id="tabRegistro" onclick="cambiarAuthTab('registro')">Registrarse</button>
+            </div>
 
-  <h2>📦 Historial</h2>
-  <ul id="historial"></ul>
-</div>
+            <div id="formLogin">
+                <input type="text" id="logUser" placeholder="Nombre de Usuario">
+                <input type="password" id="logPass" placeholder="Contraseña">
+                <button class="btn-pagar-ahora" onclick="ejecutarLogin()">Iniciar Sesión</button>
+            </div>
 
-<script src="app.js"></script>
+            <div id="formRegistro" style="display: none;">
+                <input type="text" id="regUser" placeholder="Crea un Usuario">
+                <input type="email" id="regEmail" placeholder="Tu Correo Electrónico">
+                <input type="password" id="regPass" placeholder="Crea una Contraseña">
+                <button class="btn-pagar-ahora" style="background:#00b894" onclick="ejecutarRegistro()">Crear Cuenta</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDetalle" class="modal">
+        <div class="modal-content detalle-producto-modal">
+            <span class="btn-cerrar-modal" onclick="cerrarModalDetalle()">&times;</span>
+            <div id="contenido-detalle-producto">
+                </div>
+        </div>
+    </div>
+
+    <div id="modalPago" class="modal">
+        <div class="modal-content">
+            <span class="btn-cerrar-modal" onclick="cerrarModalPago()">&times;</span>
+            
+            <div id="paso-pago-1">
+                <h3>Detalles de la Transacción</h3>
+                <div id="formulario-dinamico-pago">
+                    </div>
+                <button class="btn-pagar-ahora" onclick="procesarPagoFinal()">Confirmar Pago Seguro</button>
+            </div>
+            
+            <div id="paso-pago-2" style="display: none; text-align: center;">
+                <div class="loader"></div>
+                <p>Procesando transacción con la entidad bancaria...</p>
+            </div>
+            
+            <div id="paso-pago-3" style="display: none; text-align: center;">
+                <h2 style="color: #00cec9;">✅ ¡Compra Exitosa!</h2>
+                <p>Tu pedido ha sido registrado correctamente.</p>
+                <button class="btn-pagar-ahora" onclick="cerrarModalPago()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
