@@ -68,6 +68,7 @@ body {
     border: none;
     font-size: 16px;
     margin-bottom: 20px;
+    outline: none;
 }
 
 .filtros button {
@@ -203,7 +204,7 @@ body {
 
 .menu-perfil button:hover { background: var(--color-primario); color: black; }
 
-/* ================= MODALES ================= */
+/* ================= MODALES Y FORMULARIOS ================= */
 .modal {
     display: none;
     position: fixed;
@@ -222,6 +223,8 @@ body {
     width: 90%;
     max-width: 450px;
     position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .btn-cerrar-modal {
@@ -233,18 +236,29 @@ body {
     color: #333;
 }
 
-/* TABS DE AUTENTICACIÓN */
 .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd; }
 .auth-tabs button {
     flex: 1; padding: 10px; background: none; border: none; cursor: pointer;
     font-weight: bold; color: #666;
 }
 .auth-tabs button.tab-active { color: var(--color-primario); border-bottom: 2px solid var(--color-primario); }
-.auth-box input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+.auth-box input, #formulario-dinamico-pago input, #formulario-dinamico-pago select { 
+    width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; outline: none;
+}
+.auth-box input:focus, #formulario-dinamico-pago input:focus { border-color: var(--color-primario); }
 
 /* ================= TABLA ADMIN ================= */
 .tabla-admin { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; background: rgba(0,0,0,0.5); }
 .tabla-admin td, .tabla-admin th { padding: 15px; border-bottom: 1px solid #333; text-align: left; }
+
+/* ================= FACTURA ESTILOS ================= */
+.factura-box {
+    background: #fdfdfd;
+    color: #000;
+    font-family: 'Courier New', Courier, monospace; /* Estilo de recibo realista */
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+}
 
 .loader {
     border: 4px solid #f3f3f3;

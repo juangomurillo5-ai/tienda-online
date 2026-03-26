@@ -62,6 +62,10 @@
                 <tbody id="cuerpo-tabla-admin">
                     </tbody>
             </table>
+            
+            <div style="margin-top: 20px;">
+                <button onclick="restablecerImagenes()" style="background: #e67e22; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">🔄 Restablecer base de datos (Imágenes por defecto)</button>
+            </div>
         </section>
     </main>
 
@@ -113,9 +117,9 @@
             </div>
 
             <div id="formRegistro" style="display: none;">
-                <input type="text" id="regUser" placeholder="Crea un Usuario">
-                <input type="email" id="regEmail" placeholder="Tu Correo Electrónico">
-                <input type="password" id="regPass" placeholder="Crea una Contraseña">
+                <input type="text" id="regUser" placeholder="Crea un Usuario (Ej. juan123)">
+                <input type="email" id="regEmail" placeholder="Tu Correo Electrónico (Ej. correo@dominio.com)">
+                <input type="password" id="regPass" placeholder="Crea una Contraseña (Mínimo 6 caracteres)">
                 <button class="btn-pagar-ahora" style="background:#00b894" onclick="ejecutarRegistro()">Crear Cuenta</button>
             </div>
         </div>
@@ -147,9 +151,18 @@
             
             <div id="paso-pago-3" style="display: none; text-align: center;">
                 <h2 style="color: #00cec9;">✅ ¡Compra Exitosa!</h2>
-                <p>Tu pedido ha sido registrado correctamente.</p>
+                <p>Tu pedido ha sido registrado correctamente y descontado del inventario.</p>
                 <button class="btn-pagar-ahora" onclick="cerrarModalPago()">Aceptar</button>
             </div>
+        </div>
+    </div>
+
+    <div id="modalFactura" class="modal">
+        <div class="modal-content factura-box">
+            <span class="btn-cerrar-modal" onclick="cerrarFactura()">&times;</span>
+            <div id="contenido-factura">
+                </div>
+            <button class="btn-pagar-ahora" style="margin-top: 20px; background: #2d3436;" onclick="window.print()">🖨️ Imprimir Factura</button>
         </div>
     </div>
 
